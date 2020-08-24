@@ -16,14 +16,17 @@ function tambah($koneksi)
     $foto = $_FILES['foto']['name'];
     $ekstensi_diperbolehkan = array('png', 'jpg');
     $x = explode('.', $foto);
-    $ekstensi = strtolower(end($x));
-    $ukuran = $_FILES['foto']['size'];
+    $ekstensi = end($x);
     $foto_tmp = $_FILES['foto']['tmp_name'];
+    $file = md5($foto) . '_' . date('mjYHis') . '.' . $ekstensi;
+    $ukuran = $_FILES['foto']['size'];
+
+
 
     if (in_array($ekstensi, $ekstensi_diperbolehkan) === TRUE) {
-      if ($ukuran < 10440700) {
-        move_uploaded_file($foto_tmp, 'images/' . $foto);
-        $query_input = mysqli_query($koneksi, "INSERT INTO biodata VALUES(md5('$id'),'$nama','$tgl_lahir', '$tmplahir' , '$alamat','$foto','$gender', '$id_user')");
+      if ($ukuran < 1044070) {
+        move_uploaded_file($foto_tmp, 'images/' . $file);
+        $query_input = mysqli_query($koneksi, "INSERT INTO biodata VALUES(md5('$id'),'$nama','$tgl_lahir', '$tmplahir' , '$alamat','$file','$gender', '$id_user')");
         // die($query_input);
 
         if ($query_input) {
@@ -668,7 +671,7 @@ function tambah($koneksi)
 
                           $show_query = mysqli_query($koneksi, "SELECT * FROM biodata");
                           if (mysqli_num_rows($show_query) == 0) {
-                            echo '<tr><td>Tidak ada data</td></tr>';
+                            echo '<tr><td colspan="8">Tidak ada data</td></tr>';
                           } else {
                             $id = 1;
                             while ($data = mysqli_fetch_assoc($show_query)) {
@@ -709,6 +712,12 @@ function tambah($koneksi)
 
     if (isset($_GET['id']) && isset($_GET['aksi'])) {
       $id = $_GET['id'];
+
+      $tampil = mysqli_query($koneksi, "SELECT foto FROM biodata WHERE id_biodata='$id' ");
+
+      $data = mysqli_fetch_array($tampil);
+
+      unlink("images/" . $data['foto']);
 
       $query_hapus = mysqli_query($koneksi, "DELETE FROM biodata WHERE id_biodata='$id'");
       if ($query_hapus) {
