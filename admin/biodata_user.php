@@ -59,7 +59,7 @@ function tambah($koneksi)
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">BIODATA</h4>
+                  <h4 class="card-title">BIODATAa</h4>
 
                   <form class="forms-sample" action="" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
