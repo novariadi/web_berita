@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operator alert</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+
+    <style>
+        .btn {
+            margin: 70px 80px;
+        }
+    </style>
+</head>
+<body>
+
+
+    
+    <button class="btn btn-warning" onclick="tambah()">Klik Tambah</button>
+    <button class="btn btn-danger" onclick="kurang()">Klik Kurang</button>
+    <button class="btn btn-success" onclick="kali()">Klik kali</button>
+    <button class="btn btn-primary" onclick="bagi()">Klik bagi</button>
+
+    <script>  
+    var a=10;
+    var b=5.2;
+    var c=3; 
+
+    function tambah () {
+        alert("Nilai penjumlahan " + (a+b+c));
+    }
+
+    function kurang () {
+        alert("Nilai pengurangan " + (a-b));
+    }
+
+    function kali () {
+        alert("Nilai perkalian " + (c*a*b));
+    }
+
+    function bagi () {
+        alert("Nilai pembagian " + (a/c));
+    }
+    </script>
+
+
+</body>
+</html>

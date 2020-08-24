@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="tampil_kalimat"></div>
+    <button id="tambah" onclick="tambah_kalimat()">masukkan KTP</button>
+
+    <!-- javascript -->
+    <script>
+        function tambah_kalimat (){
+            // nilai
+            var a=document.getElementById("tampil_kalimat")
+            a.innerHTML+="<label for=''>Nomor KTP</label><input type='text' placeholder='no ktp'></input>"
+        };
+    </script>
+
+    <script src="../js/operator.js"></script>
+</body>
+</html>
