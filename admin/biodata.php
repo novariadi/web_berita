@@ -108,7 +108,7 @@ function tambah($koneksi)
                       <label>Foto</label>
                       <input type="file" class="form-control" name="foto" required>
                     </div>
-                    <button type="submit" class="btn btn-success mr-2" name="input_biodata">Submit</button>
+                    <button type="submit" class="btn btn-success mr-2" name="ubah_biodata">Submit</button>
                     <button class="btn btn-light" type="reset">Reset</button>
                   </form>
                 </div>
@@ -684,7 +684,8 @@ function tambah($koneksi)
                           <td><?php echo $data['jenis_kelamin']; ?></td>
                           <td><img src="<?php echo 'images/' . $data['foto']; ?>" alt="Gambar.jpg"></td>
                           <td>
-                            <a href="biodata.php?aksi=update&id=<?php echo $data['id_biodata']; ?>" class="btn btn-warning">Edit</a>
+                            <a href="biodata.php?aksi=update&id=<?php echo $data['id_biodata']; ?>&nama=<?php echo $data['nama']; ?>&tgl_lahir=<?php echo $data['tanggal_lahir']; ?>&tmplahir=<?php echo $data['tempat_lahir']; ?>&alamat=<?php echo $data['alamat']; ?>&jenis_kelamin=<?php echo $data['jenis_kelamin']; ?>&foto=<?php echo $data['foto']; ?>" class="btn btn-warning">Edit</a>
+
                             <a href="biodata.php?aksi=delete&id=<?php echo $data['id_biodata']; ?>" onclick="return confirm('Apakah anda yakin menghapus ?')" class="btn btn-danger">Hapus</a>
                           </td>
                         </tr>
@@ -751,81 +752,56 @@ function tambah($koneksi)
               </script>';
       }
     }
-  }
 
+    if (isset($_GET['id'])) { ?>
 
-  if (!empty($nama)) {
-    $query_update = mysqli_query($koneksi, "UPDATE kategori SET nama_kategori='$nama' WHERE id_kategori='$id'  ");
-    if ($query_update && isset($_GET['aksi'])) {
-      if ($_GET['aksi'] == 'update') {
-        echo '<script>alert("data berhasil di update")
-            window.location.href="kategori.php";
-          </script>';
-      }
-    } else {
-      echo '<script>alert("data berhasil di update")</script>';
-    }
-  }
-
-
-  if (isset($_GET['id'])) { ?>
-
-    <div class="main-panel">
-      <div class="content-wrapper">
-        <div class="row">
-          <div class="col-md-12 d-flex align-items-stretch grid-margin">
-            <div class="row flex-grow">
-              <div class="col-12">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">BIODATA</h4>
-
-                    <form class="forms-sample" action="" method="POST" enctype="multipart/form-data">
-                      <div class="form-group">
-                        <input type="hidden" name="id_biodata" value="<?php echo $_GET['id']; ?>">
-                      </div>
-                      <div class="form-group">
-                        <label>Nama</label>
-                        <input type="text" class="form-control" placeholder="Nama" name="nama" value="<?php echo $_GET['nama']; ?>" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Tanggal Lahir</label>
-                        <input type="date" class="form-control" placeholder="Tanggal lahir" name="tanggal_lahir" value="<?php echo $_GET['tanggal_lahir']; ?>" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Tempat Lahir</label>
-                        <input type="text" class="form-control" placeholder="Tempat lahir" name="tempat_lahir" value="<?php echo $_GET['tempat_lahir']; ?>" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Alamat</label>
-                        <input type="text" class="form-control" placeholder="Alamat" name="alamat" value="<?php echo $_GET['alamat']; ?>" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Jenis Kelamin</label>
-                        <?php if (empty($data['level'])) { ?>
-                          <select class="form-control" name="level">
-                            <option value="Laki-Laki">Laki-laki</option>
-                            <option value="Perempuan">Perempuan</option>
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 d-flex align-items-stretch grid-margin">
+              <div class="row flex-grow">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">BIODATA</h4>
+                      <form class="forms-sample" action="" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                          <input type="hidden" name="id_biodata" value="<?php echo $_GET['id']; ?>">
+                        </div>
+                        <div class="form-group">
+                          <label>Nama</label>
+                          <input type="text" class="form-control" placeholder="Nama" name="nama" value="<?php echo $_GET['nama']; ?>" required>
+                        </div>
+                        <div class="form-group">
+                          <label>Tanggal Lahir</label>
+                          <input type="date" class="form-control" placeholder="Tanggal lahir" name="tanggal_lahir" value="<?php echo $_GET['tgl_lahir']; ?>" required>
+                        </div>
+                        <div class="form-group">
+                          <label>Tempat Lahir</label>
+                          <input type="text" class="form-control" placeholder="Tempat lahir" name="tempat_lahir" value="<?php echo $_GET['tmplahir']; ?>" required>
+                        </div>
+                        <div class="form-group">
+                          <label>Alamat</label>
+                          <input type="text" class="form-control" placeholder="Alamat" name="alamat" value="<?php echo $_GET['alamat']; ?>" required>
+                        </div>
+                        <div class="form-group">
+                          <label>Jenis Kelamin</label>
+                          <select class="form-control" name="jenis_kelamin">
+                            <option <?php echo !empty($_GET['jenis_kelamin'] == 'Laki-Laki') ? 'selected' : ''; ?> value="Laki-Laki">Laki-laki</option>
+                            <option <?php echo !empty($_GET['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?> value="Perempuan">Perempuan</option>
                           </select>
-
-                        <?php } else { ?>
-                          <select class="form-control" name="level">
-                            <option <?php echo ($data['jenis_kelamin'] == 'Laki-Laki') ? 'selected' : ''; ?> value="Laki-laki">Laki-laki</option>
-                            <option <?php echo ($data['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?> value="Perempuan">Perempuan</option>
-                          </select>
-                        <?php } ?>
-                      </div>
-                      <div class="form-group">
-                        <label>Foto</label>
-                        <input type="file" class="form-control" name="foto" value="<?php echo $_GET['foto']; ?>" required>
-                      </div>
-                      <button type="submit" class="btn btn-success mr-2" name="ubah_biodata">Submit</button>
-                      <button class="btn btn-light" type="reset">Reset</button>
-                    </form>
+                        </div>
+                        <div class=" form-group">
+                          <label>Foto</label>
+                          <input type="file" class="form-control" name="foto" value="<?php echo $_GET['foto']; ?>" required>
+                        </div>
+                        <button type="submit" class="btn btn-success mr-2" name="ubah_biodata">Submit</button>
+                        <button class="btn btn-light" type="reset">Reset</button>
+                      </form>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- <div class="col-12 stretch-card">
+                <!-- <div class="col-12 stretch-card">
                   <div class="card">
                     <div class="card-body">
                       <h4 class="card-title">Horizontal Form</h4>
@@ -851,9 +827,9 @@ function tambah($koneksi)
                     </div>
                   </div>
                 </div> -->
+              </div>
             </div>
-          </div>
-          <!-- <div class="col-md-6 grid-margin stretch-card">
+            <!-- <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Form Profil Instruktur</h4>
@@ -1353,13 +1329,13 @@ function tambah($koneksi)
                 </div>
               </div>
             </div> -->
+          </div>
         </div>
       </div>
-    </div>
 
   <?php
+    }
   }
-
   ?>
 
 

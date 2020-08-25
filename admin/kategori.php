@@ -132,7 +132,7 @@ function tambah($koneksi)
           </script>';
           }
         } else {
-          echo '<script>alert("data berhasil di update")</script>';
+          echo '<script>alert("data gagal di update")</script>';
         }
       }
     }
