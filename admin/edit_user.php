@@ -43,10 +43,6 @@ include 'header.php';
                     <input type="email" class="form-control" placeholder="Email" name="email" value="<?php echo $data['email']; ?>" required>
                   </div>
                   <div class="form-group">
-                    <label>Password</label>
-                    <input type="text" class="form-control" placeholder="Password" name="password" value="<?php echo $data['password']; ?>" required>
-                  </div>
-                  <div class="form-group">
                     <label>No. Hp </label>
                     <input type="number" class="form-control" placeholder="Nomor Hp" name="no_hp" value="<?php echo $data['no_hp']; ?>" required>
                   </div>
@@ -67,6 +63,27 @@ include 'header.php';
                       </select>
                     <?php } ?>
                   </div>
+
+                  <!-- update password -->
+                  <?php
+                  if (!empty($data['password'])) { ?>
+
+                    <button class="btn btn-primary" onclick="gantiPass()">Ubah Password</button>
+                    <div id="gantipass"></div>
+
+                  <?php
+                  } else { ?>
+
+                    <div class="form-group">
+                      <label>Password baru</label>
+                      <input type="password" class="form-control" placeholder="password" name="password" required>
+                    </div>
+
+                  <?php
+                  }
+                  ?>
+                  <!-- Akhir update password -->
+                  <br>
                   <button type="submit" class="btn btn-success mr-2" name="update_user">Submit</button>
                   <button class="btn btn-light" type="reset">Reset</button>
                 </form>
@@ -614,6 +631,24 @@ include 'header.php';
 
 
 <?php include 'footer.php'; ?>
+
+<script>
+  function gantiPass() {
+
+    document.getElementById('gantipass')
+      .innerHTML +=
+      ' <div class="row purchace-popup">\
+          <div class="col-12 form-control">\
+            <span class="d-flex alifn-items-center">\
+              <input type="text" class="form-control" placeholder="Password" name="password" required>\
+            </span>\
+          </div>\
+        </div>'
+
+  }
+</script>
+
+
 </body>
 
 </html>
