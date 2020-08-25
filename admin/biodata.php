@@ -25,7 +25,7 @@ function tambah($koneksi)
 
     if (in_array($ekstensi, $ekstensi_diperbolehkan) === TRUE) {
       if ($ukuran < 1044070) {
-        move_uploaded_file($foto_tmp, 'images/' . $file);
+        move_uploaded_file($foto_tmp, 'images/biodata' . $file);
         $query_input = mysqli_query($koneksi, "INSERT INTO biodata VALUES(md5('$id'),'$nama','$tgl_lahir', '$tmplahir' , '$alamat','$file','$gender', '$id_user')");
         // die($query_input);
 
@@ -716,7 +716,7 @@ function tambah($koneksi)
       $tgl_lahir = $_POST['tanggal_lahir'];
       $tmplahir = $_POST['tempat_lahir'];
       $alamat = $_POST['alamat'];
-      $gender = $_POST['jenis_kelamin'];
+      $jk = $_POST['jenis_kelamin'];
       // upload file foto
       $foto = $_FILES['foto']['name'];
       $ekstensi_diperbolehkan = array('png', 'jpg');
@@ -728,14 +728,17 @@ function tambah($koneksi)
 
       if (in_array($ekstensi, $ekstensi_diperbolehkan) === TRUE) {
         if ($ukuran < 1044070) {
-          move_uploaded_file($foto_tmp, 'images/' . $file);
-          $query_update = mysqli_query($koneksi, "UPDATE biodata SET id_biodata='$id', nama='$nama', tanggal_lahir='$tgl_lahir', tempat_lahir='$tmplahir', alamat='$alamat', jenis_kelamin='$gender', foto='$file' ");
+          move_uploaded_file($foto_tmp, 'images/biodata' . $file);
+          $query_update = mysqli_query($koneksi, "UPDATE biodata SET  nama='$nama', tanggal_lahir='$tgl_lahir', tempat_lahir='$tmplahir', alamat='$alamat', jenis_kelamin='$jk', foto='$file' WHERE id_biodata='$id' ");
           // die($query_input);
 
-          if ($query_update) {
-            echo '<script>alert("data user berhasil diinput") 
-                          window.location.href="biodata.php";
-                      </script>';
+          if ($query_update && isset($_GET['aksi'])) {
+            if ($_GET['aksi'] == 'update') {
+
+              echo '<script>alert("data user berhasil diinput") 
+                      window.location.href="biodata.php";
+                    </script>';
+            }
           } else {
             echo '<script>alert("Gagal Upload Foto")
                       window.location.href="biodata.php";
@@ -787,13 +790,15 @@ function tambah($koneksi)
                         <div class="form-group">
                           <label>Jenis Kelamin</label>
                           <select class="form-control" name="jenis_kelamin">
-                            <option <?php echo !empty($_GET['jenis_kelamin'] == 'Laki-Laki') ? 'selected' : ''; ?> value="Laki-Laki">Laki-laki</option>
-                            <option <?php echo !empty($_GET['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?> value="Perempuan">Perempuan</option>
+                            <option value="<?php echo !empty($_GET['jenis_kelamin'] == 'Laki-Laki') ? 'selected' : ''; ?>">Laki-laki</option>
+                            <option value="<?php echo !empty($_GET['jenis_kelamin'] == 'perempuan') ? 'selected' : ''; ?>">perempuan</option>
                           </select>
                         </div>
                         <div class=" form-group">
                           <label>Foto</label>
-                          <input type="file" class="form-control" name="foto" value="<?php echo $_GET['foto']; ?>" required>
+                          <br>
+                          <img class="form-group" src="<?php echo 'images/' . $_GET['foto']; ?>" style="width: 150px; border-radius: 20% ">
+                          <input type="file" class="form-control" name="foto" value="<?php echo $_GET['foto']; ?>">
                         </div>
                         <button type="submit" class="btn btn-success mr-2" name="ubah_biodata">Submit</button>
                         <button class="btn btn-light" type="reset">Reset</button>
